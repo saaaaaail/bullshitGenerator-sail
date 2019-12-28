@@ -10,6 +10,6 @@
 
 感谢作者提供的data.json资源文件
 
-
+很有意思呢
 
 ![avatar](https://github.com/saaaaaail/bullshitGenerator-sail/blob/master/result.png?raw=true)
