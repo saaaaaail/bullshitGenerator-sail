@@ -11,3 +11,5 @@
 感谢作者提供的data.json资源文件
 
 看了自己的代码，感觉文章只能开开玩笑，找寻乐趣
+
+![avatar](https://github.com/saaaaaail/bullshitGenerator-sail/blob/master/result.png?raw=true)
