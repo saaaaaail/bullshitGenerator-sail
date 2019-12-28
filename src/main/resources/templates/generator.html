@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>generatorBullShit</title>
+    <link rel="stylesheet" th:href="@{/webjars/mdui/dist/css/mdui.css}">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}">
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script th:src="@{/webjars/mdui/dist/js/mdui.js}"></script>
+    <style>
+        body{
+            background-color: silver;
+        }
+        div{
+            font-family: Georgia,serif;
+            margin: 1% auto 1% auto;
+        }
+        input{
+            border-bottom: 2px solid black;
+            border-top:0px;
+            border-left:0px;
+            border-right:0px;
+            background-color: silver;
+            outline: none;
+            text-align: center;
+            width: 20%;
+        }
+        label{
+            font-size: x-large;
+            text-align: center;
+        }
+        p{
+            font-size: medium;
+        }
+        .text-center{
+            text-align: center;
+        }
+        .keepline{
+            width:auto;
+            word-break:keep-all;
+            white-space:nowrap;
+        }
+        .keepWhite{
+            width: 100px;
+            height: auto;
+            word-break: break-all;
+            word-wrap: break-word;
+
+        }
+        .borderAround{
+            margin: 3% auto auto;
+            border-style: solid;
+            border-width: thick;
+            border-color: black;
+        }
+        .article{
+            word-wrap: break-word;
+            word-break: break-all;
+            white-space: pre-line;
+            font-size: large;
+        }
+    </style>
+</head>
+<body>
+    <div class="mdui-container borderAround">
+        <div class="mdui-center text-center">
+            <h1>狗屁不通&nbsp;&nbsp;<small>文章生成器</small></h1>
+        </div>
+        <div class="mdui-divider-dark"></div>
+        <label class="mdui-center text-center">主题</label>
+        <div id="subject" class="text-center">
+            <input type="text" value="自律给我自由"/>
+        </div>
+        <div class="text-center">
+            <button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent" onclick="generateArticle()">生成</button>
+        </div>
+        <div class="mdui-divider-dark"></div>
+
+            <div class="article mdui-text-color-black-*">
+
+            </div>
+    </div>
+
+    <script type="text/javascript" th:inline="javascript">
+
+        function check(subj) {
+            var hasError = false;
+            if (subj.length===0){
+                hasError=true
+            }else {
+                hasError=false;
+            }
+            return hasError;
+        }
+
+        function generateArticle() {
+            var subj = $('#subject>input').val();
+            if (check(subj)){
+                return;
+            }
+            var webUrl = [[${url}]]+'/generate';
+            console.log(webUrl);
+            $.ajax({
+                url:'http://127.0.0.1:8082/api-bullshit/generate',
+                data:{subject:subj},
+                type:"GET",
+                dataType:"json",
+                success:function (d) {
+                    console.log(d.data);
+                    //var data = JSON.parse(d.data);
+                    $('.article').empty();
+
+                    $('.article').html(d.data);
+                },
+                error:function (err) {
+                    mdui.snackbar({
+                        message: '网络不好，生成失败了~'
+                    });
+                }
+            });
+        }
+    </script>
+</body>
+</html>
